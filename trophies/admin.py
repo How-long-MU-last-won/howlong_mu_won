@@ -5,8 +5,9 @@ from .models import Trophy
 
 
 class TrophyAdmin(admin.ModelAdmin):
-    list_display = ("id", "name", "lastWonDate", "numTimesWon")
-    search_fields = ("id", "name")
+    list_display = ("id", "name", "lastWonDate", "numTimesWon", "lastWonBy")
+    list_editable = ("name", "lastWonDate", "numTimesWon", "lastWonBy")
+    search_fields = ("name", "lastWonBy")
     list_per_page = 25
 
 
