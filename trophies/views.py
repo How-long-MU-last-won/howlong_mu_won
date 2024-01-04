@@ -16,3 +16,10 @@ def getTrophy(request, pk):
     trophy = Trophy.objects.get(id=pk)
     serializer = TrophySerializer(trophy, many=False)
     return Response(serializer.data)
+
+
+@api_view(["GET"])
+def getTrophyByCoach(request, coach_id):
+    trophy = Trophy.objects.filter(lastWonBy=coach_id)
+    serializer = TrophySerializer(trophy, many=True)
+    return Response(serializer.data)
