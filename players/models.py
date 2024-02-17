@@ -11,13 +11,18 @@ class Position(models.Model):
 
 
 class Player(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=200)
     numGamesPlayed = models.IntegerField()
     playFrom = models.DateField()
-    playTo = models.DateField(null=True)
+    playTo = models.DateField(null=True, blank=True)
     statURL = models.CharField(max_length=200, null=True)
-    boughtBy = models.ForeignKey(Coach, on_delete=models.CASCADE, null=True)
-    workWith = models.ManyToManyField(Coach, related_name="workWith")
+    boughtBy = models.ForeignKey(
+        Coach, on_delete=models.CASCADE, null=True, related_name="boughtBy"
+    )
+    workWith = models.ManyToManyField(
+        Coach, related_name="workWith", null=True, blank=True
+    )
     position = models.ForeignKey(Position, on_delete=models.CASCADE, null=True)
     price = models.CharField(max_length=200, null=True)
 

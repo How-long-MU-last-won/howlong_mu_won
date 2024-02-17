@@ -9,12 +9,8 @@ services:
     command: 'python manage.py runserver 0.0.0.0:8000'
     ports:
       - 8000:8000
-    environment:
-      - PG_USER=postgres
-      - PG_PASSWORD=postgres
-      - PG_DB=postgres
-      - PG_HOST=db
-      - PG_PORT=5432
+    env_file:
+      - .env
     depends_on:
       - db
     volumes:

@@ -14,4 +14,5 @@ urlpatterns = [
         views.getAllCoachesWorkWith,
         name="playerByCoachWorkWith",
     ),
+    path("pos/<int:position_id>/", views.getByPosition, name="playerByPosition"),
 ]

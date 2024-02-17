@@ -11,7 +11,14 @@ class PositionAdmin(admin.ModelAdmin):
     list_per_page = 5
 
 
+class workWithInline(admin.TabularInline):
+    model = Player.workWith.through
+    fk_name = "player"
+    extra = 2
+
+
 class PlayerAdmin(admin.ModelAdmin):
+    inlines = [workWithInline]
     list_display = (
         "id",
         "name",
@@ -34,7 +41,7 @@ class PlayerAdmin(admin.ModelAdmin):
         "price",
     )
     search_fields = ("name", "boughtBy", "workWith", "position")
-    list_per_page = 25
+    list_per_page = 15
 
 
 admin.site.register(Player, PlayerAdmin)

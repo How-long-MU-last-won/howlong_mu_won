@@ -22,6 +22,13 @@ def getPlayer(request, pk):
 
 
 @api_view(["GET"])
+def getByPosition(request, position_id):
+    players = Player.objects.filter(position=position_id)
+    serializer = PlayerSerializer(players, many=True)
+    return Response(serializer.data)
+
+
+@api_view(["GET"])
 def getByCoachBought(request, coach_id):
     player = Player.objects.filter(boughtBy=coach_id)
     serializer = PlayerSerializer(player, many=True)

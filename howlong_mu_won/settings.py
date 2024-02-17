@@ -28,6 +28,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["localhost"]
 
+CORS_ALLOWED_ORIGINS = ["http://localhost:4200"]
+CORS_LOGGING = True
+
 
 # Application definition
 
@@ -41,10 +44,12 @@ INSTALLED_APPS = [
     "trophies.apps.TrophiesConfig",
     "players.apps.PlayersConfig",
     "coaches.apps.CoachesConfig",
+    "corsheaders",
     "rest_framework",
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -81,11 +86,11 @@ WSGI_APPLICATION = "howlong_mu_won.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": os.environ.get("DB_DRIVER", "django.db.backends.postgresql"),
-        "NAME": os.environ.get("PG_DB", "postgres"),
-        "USER": os.environ.get("PG_USER", "postgres"),
-        "PASSWORD": os.environ.get("PG_PASSWORD", "postgres"),
-        "HOST": os.environ.get("PG_HOST", "localhost"),
-        "PORT": os.environ.get("PG_PORT", "5432"),
+        "NAME": os.environ.get("PG_DB"),
+        "USER": os.environ.get("PG_USER"),
+        "PASSWORD": os.environ.get("PG_PASSWORD"),
+        "HOST": os.environ.get("PG_HOST"),
+        "PORT": os.environ.get("PG_PORT"),
     }
 }
 

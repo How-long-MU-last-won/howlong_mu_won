@@ -8,7 +8,7 @@ from players.serializers import PlayerSerializer
 # Create your views here.
 @api_view(["GET"])
 def getCoaches(request):
-    coaches = Coach.objects.all()
+    coaches = Coach.objects.order_by("-leadFrom").all()
     serializer = CoachSerializer(coaches, many=True)
     return Response(serializer.data)
 
