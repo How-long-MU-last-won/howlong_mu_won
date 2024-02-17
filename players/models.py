@@ -20,9 +20,7 @@ class Player(models.Model):
     boughtBy = models.ForeignKey(
         Coach, on_delete=models.CASCADE, null=True, related_name="boughtBy"
     )
-    workWith = models.ManyToManyField(
-        Coach, related_name="workWith", null=True, blank=True
-    )
+    workWith = models.ManyToManyField(Coach, related_name="workWith", blank=True)
     position = models.ForeignKey(Position, on_delete=models.CASCADE, null=True)
     price = models.CharField(max_length=200, null=True)
 
