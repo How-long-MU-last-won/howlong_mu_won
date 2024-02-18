@@ -26,10 +26,14 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["localhost:4200", "howlong-mu-won-cc98a4796fd5.herokuapp.com"]
 
-# CORS_ALLOWED_ORIGINS = ["http://localhost:4200"]
-# CORS_LOGGING = True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:4200",
+    "https://howlong-mu-won-cc98a4796fd5.herokuapp.com",
+]
+CORS_LOGGING = True
+CSRF_TRUSTED_ORIGINS = ["localhost:4200", "howlong-mu-won-cc98a4796fd5.herokuapp.com"]
 
 
 # Application definition
@@ -51,9 +55,9 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
@@ -91,6 +95,10 @@ DATABASES = {
         "PASSWORD": os.environ.get("PG_PASSWORD"),
         "HOST": os.environ.get("PG_HOST"),
         "PORT": os.environ.get("PG_PORT"),
+        "OPTIONS": {
+            "sslmode": "require",
+            "options": os.environ.get("PG_ENDPOINT"),
+        },
     }
 }
 
@@ -135,3 +143,8 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+import django_heroku
+
+django_heroku.settings(locals())
