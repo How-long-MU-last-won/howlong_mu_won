@@ -40,7 +40,7 @@ class PlayerAdmin(admin.ModelAdmin):
         "position",
         "price",
     )
-    search_fields = ("name", "boughtBy", "workWith", "position")
+    search_fields = ("name", "price")
     list_per_page = 15
 
 

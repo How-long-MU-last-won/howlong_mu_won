@@ -4,13 +4,21 @@ from .models import Player, Position
 from .serializers import PlayerSerializer, PositionSerializer
 from coaches.models import Coach
 from coaches.serializers import CoachSerializer
+from django.core.cache import cache
+from django.dispatch import receiver
+from django.db.models.signals import post_save, post_delete
 
 
 # Create your views here.
 @api_view(["GET"])
 def getPlayers(request):
+    cache_key = "howlong_mu_won_players_getPlayers"
+    if cache.get(cache_key):
+        # print("cached")
+        return Response(cache.get(cache_key))
     players = Player.objects.all()
     serializer = PlayerSerializer(players, many=True)
+    cache.set(cache_key, serializer.data, timeout=60 * 60 * 24 * 7)
     return Response(serializer.data)
 
 
@@ -40,3 +48,10 @@ def getAllCoachesWorkWith(request, pk):
     coaches = Player.objects.get(id=pk).workWith.all()
     serializer = CoachSerializer(coaches, many=True)
     return Response(serializer.data)
+
+
+@receiver(post_save, sender=Player)
+@receiver(post_delete, sender=Player)
+def invalidate_cache_on_player_change(sender, instance, **kwargs):
+    #  Invalidate all cached items
+    cache.delete_many(keys=cache.keys("howlong_mu_won_players_*"))

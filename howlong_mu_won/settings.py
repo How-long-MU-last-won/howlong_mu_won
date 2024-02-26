@@ -26,14 +26,22 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost:4200", "howlong-mu-won-cc98a4796fd5.herokuapp.com"]
+ALLOWED_HOSTS = [
+    "http://localhost:4200",
+    "https://howlong-mu-won-cc98a4796fd5.herokuapp.com",
+    "https://howlong-mu-last-won.netlify.app",
+]
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:4200",
     "https://howlong-mu-won-cc98a4796fd5.herokuapp.com",
+    "https://howlong-mu-last-won.netlify.app",
 ]
 CORS_LOGGING = True
-CSRF_TRUSTED_ORIGINS = ["localhost:4200", "howlong-mu-won-cc98a4796fd5.herokuapp.com"]
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:4200",
+    "https://howlong-mu-won-cc98a4796fd5.herokuapp.com",
+]
 
 
 # Application definition
@@ -82,6 +90,16 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "howlong_mu_won.wsgi.application"
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": os.environ.get("REDIS_LOCATION"),
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        },
+    }
+}
 
 
 # Database
