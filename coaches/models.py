@@ -13,7 +13,7 @@ class Coach(models.Model):
     numTies = models.IntegerField(default=0)
     leadFrom = models.DateField()
     leadTo = models.DateField(blank=True, null=True, default=datetime.date.today)
-    moneySpent = models.IntegerField(default=0)
+    moneySpent = models.CharField(max_length=200, default="0")
     statURL = models.CharField(max_length=200, blank=True, null=True)
     shortDesc = models.TextField(blank=True, null=True)
     numPlayersUsed = models.IntegerField(default=0)
